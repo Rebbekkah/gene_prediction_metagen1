@@ -62,12 +62,27 @@ def get_arguments():
 def read_fasta(fasta_file):
     """Extract the complete genome sequence as a single string
     """
-    pass
+    with open(fasta_file, "r") as fasta_filin :
+        seq = ""
+        for line in fasta_filin :
+            if line.startswith(">") :
+                continue
+            else :
+                seq += line.strip()
+
+        return seq
+
 
 def find_start(start_regex, sequence, start, stop):
     """Find the start codon
     """
-    pass
+    match = start_regex.search(sequence[start, [stop]])
+    print(match)
+    if match not in sequence :
+        return None
+    else :
+        return match.start(), match.end()
+
 
 
 def find_stop(stop_regex, sequence, start):
@@ -147,7 +162,9 @@ def main():
     # Arguments
     args = get_arguments()
     # Let us do magic in 5' to 3'
-    
+    sequence = read_fasta(args.genome_file)
+    #print(len(sequence))
+    f_start, f_end = find_start(start_regex, sequence, 0, len(sequence))
     # Don't forget to uncomment !!!
     # Call these function in the order that you want
     # We reverse and complement
